@@ -26,8 +26,6 @@ function Home() {
 
     setLoading(true);
 
-    // Aqui você implementará a lógica de upload para seu backend
-    // Por enquanto, vamos simular um upload com setTimeout
     try {
       await new Promise(resolve => setTimeout(resolve, 2000));
       // Simulando uma URL retornada pelo servidor
