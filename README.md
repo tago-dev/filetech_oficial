@@ -1,70 +1,138 @@
-# Getting Started with Create React App
+# FileTech - Compartilhamento Simples de Arquivos
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![FileTech Logo](public/logo192.png)
 
-## Available Scripts
+FileTech é uma aplicação web moderna para compartilhamento rápido e fácil de arquivos, desenvolvida com React e design moderno em tema escuro.
 
-In the project directory, you can run:
+## 🚀 Funcionalidades
+
+- 📤 Upload de arquivos com interface drag-and-drop
+- 🔗 Geração de links compartilháveis
+- 👤 Sistema de autenticação de usuários
+- 🌙 Design moderno com tema escuro
+- 📱 Interface responsiva
+- 🔒 Proteção de rotas
+- ⚡ Feedback visual em tempo real
+
+## 🛠️ Tecnologias Utilizadas
+
+- React.js
+- React Router DOM
+- React Icons
+- LocalStorage para autenticação
+- CSS Moderno com Variáveis
+- Gradient Design
+
+## 📦 Instalação
+
+1. Clone o repositório:
+
+```bash
+git clone https://github.com/tago-dev/filetech_oficial.git
+```
+
+2. Entre no diretório:
+```bash
+cd filetech_oficial
+```
+
+3. Instale as dependências:
+```bash
+npm install
+```
+
+4. Execute o projeto:
+```bash
+npm start
+```
+
+## 💻 Como Usar
+
+1. Acesse a aplicação
+2. Faça login ou crie uma nova conta
+3. Na página principal, arraste um arquivo ou clique para selecionar
+4. Clique em "Enviar arquivo"
+5. Copie o link gerado para compartilhar
+
+## 🔐 Autenticação
+
+Para fins de teste, a aplicação utiliza localStorage para simular um sistema de autenticação. Em produção, recomenda-se implementar um backend seguro.
+
+### Dados Armazenados:
+- Email do usuário
+- Senha (não recomendado para produção)
+- ID do usuário
+- Token de sessão
+
+## 📱 Responsividade
+
+A aplicação é totalmente responsiva e se adapta a diferentes tamanhos de tela:
+- Desktop (1024px+)
+- Tablet (768px - 1023px)
+- Mobile (até 767px)
+
+## 🎨 Tema
+
+O tema escuro utiliza as seguintes cores principais:
+```css
+--bg-primary: #1a1a1a
+--bg-secondary: #252525
+--bg-tertiary: #2d2d2d
+--accent-color: #00b4d8
+--text-primary: #ffffff
+--text-secondary: #b3b3b3
+```
+
+## 🔄 Próximas Atualizações
+
+- [ ] Implementação de backend real
+- [ ] Sistema de preview de arquivos
+- [ ] Progresso real do upload
+- [ ] Limite de tamanho de arquivo
+- [ ] Sistema de expiração de links
+- [ ] Histórico de uploads
+
+## 📄 Licença
+
+Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+
+## 👥 Contribuição
+
+1. Faça um Fork do projeto
+2. Crie uma Branch para sua Feature (`git checkout -b feature/NovaFuncionalidade`)
+3. Faça o Commit das suas mudanças (`git commit -m 'Adiciona nova funcionalidade'`)
+4. Faça o Push para a Branch (`git push origin feature/NovaFuncionalidade`)
+5. Abra um Pull Request
+
+## 📞 Contato
+
+- Email: tago.dev@pm.me
+- Website: em breve
+- GitHub: [tago-dev](https://github.com/tago-dev)
+
+## ⚠️ Aviso
+
+Esta é uma versão de demonstração e não deve ser usada em produção sem as devidas modificações de segurança e implementação de um backend apropriado.
+
+## 📝 Scripts Disponíveis
+
+No diretório do projeto, você pode executar:
 
 ### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Executa o aplicativo no modo de desenvolvimento.\
+Abra [http://localhost:3000](http://localhost:3000) para visualizá-lo no navegador.
 
 ### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Inicia o executor de teste no modo de observação interativo.
 
 ### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Compila o aplicativo para produção na pasta `build`.\
+Ele agrupa corretamente o React no modo de produção e otimiza a compilação para obter o melhor desempenho.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Desenvolvido com ❤️ por Tiago Bettega
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
