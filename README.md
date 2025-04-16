@@ -132,6 +132,34 @@ Inicia o executor de teste no modo de observação interativo.
 Compila o aplicativo para produção na pasta `build`.\
 Ele agrupa corretamente o React no modo de produção e otimiza a compilação para obter o melhor desempenho.
 
+## Configuração do Supabase
+
+Este projeto utiliza o [Supabase](https://supabase.io/) como banco de dados e serviço de autenticação. Siga os passos abaixo para configurar:
+
+1. Crie uma conta no [Supabase](https://app.supabase.io/)
+2. Crie um novo projeto
+3. No painel do projeto, vá para Settings > API
+4. Copie a URL do projeto e a chave anônima
+5. No arquivo `.env.local` na raiz do projeto (crie se não existir), adicione:
+
+```
+REACT_APP_SUPABASE_URL=sua-url-supabase
+REACT_APP_SUPABASE_ANON_KEY=sua-chave-anonima-supabase
+```
+
+6. Substitua os valores pelas suas credenciais do Supabase
+7. Reinicie o servidor de desenvolvimento
+
+### Tabelas necessárias no Supabase
+
+O Supabase já vem com a tabela `auth.users` para gerenciar usuários. Não é necessário criar tabelas adicionais para este projeto básico de autenticação.
+
+### Habilitar autenticação por email/senha
+
+1. No painel do Supabase, vá para Authentication > Providers
+2. Verifique se Email está habilitado
+3. Configure as opções de acordo com suas necessidades (confirmação de email, etc.)
+
 ---
 
 Desenvolvido com ❤️ por Tiago Bettega

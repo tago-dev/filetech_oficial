@@ -1,26 +1,38 @@
 .login-container {
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
-  align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
-  padding: 1rem;
+  align-items: center;
+  background-color: var(--bg-dark);
+  background-image: linear-gradient(135deg, var(--bg-dark) 0%, #1d1d2c 100%);
 }
 
 .login-box {
-  background-color: var(--bg-secondary);
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 400px;
+  max-width: 420px;
+  padding: 2.5rem;
+  background-color: var(--bg-medium);
+  border-radius: 12px;
+  box-shadow: var(--shadow-soft);
 }
 
 .login-box h1 {
   text-align: center;
-  margin-bottom: 2rem;
-  font-size: 2.5rem;
-  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+  font-size: 2.2rem;
+  color: var(--text-light);
+}
+
+.login-box h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.3rem;
+  color: var(--text-medium);
+  font-weight: 500;
+}
+
+.accent {
+  color: var(--primary-color);
 }
 
 .input-group {
@@ -31,66 +43,98 @@
 .input-icon {
   position: absolute;
   left: 1rem;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--text-secondary);
+  top: 1rem;
+  color: var(--text-dark);
+  font-size: 1.1rem;
 }
 
 .input-group input {
   width: 100%;
-  padding: 1rem;
-  padding-left: 3rem;
-  background-color: var(--bg-tertiary);
+  padding: 1rem 1rem 1rem 3rem;
   border: 1px solid var(--border-color);
-  border-radius: 6px;
-  color: var(--text-primary);
+  border-radius: 8px;
+  background-color: var(--bg-light);
+  color: var(--text-light);
   font-size: 1rem;
   transition: all 0.3s ease;
 }
 
 .input-group input:focus {
   outline: none;
-  border-color: var(--accent-color);
-  box-shadow: 0 0 0 2px rgba(0, 180, 216, 0.2);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(77, 132, 226, 0.2);
 }
 
-.login-button,
-.register-button {
+.login-button {
   width: 100%;
   padding: 1rem;
+  margin-bottom: 1rem;
+  background-color: var(--primary-color);
+  color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.login-button {
-  background-color: var(--accent-color);
-  color: white;
-  margin-bottom: 1rem;
+.login-button:hover:not(:disabled) {
+  background-color: var(--primary-dark);
 }
 
-.register-button {
+.login-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.toggle-form-button {
+  width: 100%;
+  padding: 0.8rem;
   background-color: transparent;
-  color: var(--text-primary);
+  color: var(--text-medium);
   border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-.login-button:hover {
-  background-color: #0095b3;
-  transform: translateY(-2px);
+.toggle-form-button:hover:not(:disabled) {
+  background-color: var(--bg-light);
+  color: var(--text-light);
 }
 
-.register-button:hover {
-  background-color: var(--bg-tertiary);
-  transform: translateY(-2px);
+.toggle-form-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
 }
 
 .error-message {
   color: var(--error-color);
-  text-align: center;
-  margin-bottom: 1rem;
+  background-color: var(--error-bg);
+  padding: 0.8rem;
+  border-radius: 6px;
+  margin-bottom: 1.5rem;
   font-size: 0.9rem;
+  text-align: center;
+}
+
+.spinner-small {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 } 

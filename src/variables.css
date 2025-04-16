@@ -1,0 +1,31 @@
+:root {
+  /* Cores principais */
+  --primary-color: #4d84e2;
+  --primary-dark: #3a70c9;
+  --accent-color: #2ecc71;
+  
+  /* Fundo */
+  --bg-dark: #121212;
+  --bg-medium: #1a1a1a;
+  --bg-light: #222222;
+  --bg-lighter: #282828;
+  --bg-input: #333333;
+  
+  /* Texto */
+  --text-light: #f0f0f0;
+  --text-medium: #b0b0b0;
+  --text-dark: #999999;
+  
+  /* Estados */
+  --error-color: #ff6b6b;
+  --error-bg: rgba(255, 107, 107, 0.1);
+  
+  /* Bordas */
+  --border-color: #3a3a3a;
+  --border-focus: #4d84e2;
+  --border-active: #444444;
+  
+  /* Sombras */
+  --shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.2);
+  --shadow-small: 0 2px 10px rgba(0, 0, 0, 0.1);
+} 

@@ -1,15 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaUser, FaLock } from 'react-icons/fa';
+import { FaUser, FaLock, FaUserPlus, FaEnvelope } from 'react-icons/fa';
 import './Login.css';
+import { loginUsuario, registrarUsuario, isAutenticado } from '../lib/authService';
 
 function Login() {
     const [formData, setFormData] = useState({
         email: '',
         password: '',
+        nome: '',
     });
+    const [isRegistrando, setIsRegistrando] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const navigate = useNavigate();
+
+    useEffect(() => {
+        // Verificar se o usuário já está autenticado
+        const verificarAutenticacao = async () => {
+            const autenticado = await isAutenticado();
+            if (autenticado) {
+                navigate('/');
+            }
+        };
+
+        verificarAutenticacao();
+    }, [navigate]);
 
     const handleChange = (e) => {
         setFormData({
@@ -18,62 +34,92 @@ function Login() {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
+        setLoading(true);
 
-        // Verificar se o usuário já existe
-        const users = JSON.parse(localStorage.getItem('users') || '[]');
-        const user = users.find(u => u.email === formData.email);
+        try {
+            if (isRegistrando) {
+                // Registrar
+                if (!formData.nome) {
+                    setError('Por favor, informe seu nome');
+                    setLoading(false);
+                    return;
+                }
 
-        if (user && user.password === formData.password) {
-            localStorage.setItem('currentUser', JSON.stringify(user));
-            navigate('/');
-        } else {
-            setError('Email ou senha inválidos');
+                const { error } = await registrarUsuario(formData.email, formData.password, formData.nome);
+
+                if (error) {
+                    throw error;
+                }
+
+                setError('');
+                alert('Cadastro realizado com sucesso! Verifique seu email para confirmar o registro.');
+                setIsRegistrando(false);
+            } else {
+                // Login
+                const { data, error } = await loginUsuario(formData.email, formData.password);
+
+                if (error) {
+                    throw error;
+                }
+
+                // Armazena informações da sessão
+                localStorage.setItem('currentUser', JSON.stringify(data.user));
+                navigate('/');
+            }
+        } catch (error) {
+            setError(
+                error.message === 'Invalid login credentials'
+                    ? 'Email ou senha inválidos'
+                    : error.message || 'Ocorreu um erro no processamento da requisição'
+            );
+        } finally {
+            setLoading(false);
         }
     };
 
-    const handleRegister = (e) => {
-        e.preventDefault();
-
-        if (!formData.email || !formData.password) {
-            setError('Preencha todos os campos');
-            return;
-        }
-
-        const users = JSON.parse(localStorage.getItem('users') || '[]');
-
-        if (users.some(user => user.email === formData.email)) {
-            setError('Este email já está cadastrado');
-            return;
-        }
-
-        const newUser = {
-            id: Date.now(),
-            email: formData.email,
-            password: formData.password,
-        };
-
-        users.push(newUser);
-        localStorage.setItem('users', JSON.stringify(users));
-        localStorage.setItem('currentUser', JSON.stringify(newUser));
-        navigate('/');
+    const toggleFormMode = () => {
+        setIsRegistrando(!isRegistrando);
+        setError('');
+        setFormData({
+            email: '',
+            password: '',
+            nome: '',
+        });
     };
 
     return (
         <div className="login-container">
             <div className="login-box">
                 <h1>File<span className="accent">Tech</span></h1>
+                <h2>{isRegistrando ? 'Criar Conta' : 'Login'}</h2>
+
                 <form onSubmit={handleSubmit}>
+                    {isRegistrando && (
+                        <div className="input-group">
+                            <FaUserPlus className="input-icon" />
+                            <input
+                                type="text"
+                                name="nome"
+                                placeholder="Nome completo"
+                                value={formData.nome}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                    )}
+
                     <div className="input-group">
-                        <FaUser className="input-icon" />
+                        <FaEnvelope className="input-icon" />
                         <input
                             type="email"
                             name="email"
                             placeholder="Email"
                             value={formData.email}
                             onChange={handleChange}
+                            required
                         />
                     </div>
 
@@ -85,21 +131,33 @@ function Login() {
                             placeholder="Senha"
                             value={formData.password}
                             onChange={handleChange}
+                            required
                         />
                     </div>
 
                     {error && <div className="error-message">{error}</div>}
 
-                    <button type="submit" className="login-button">
-                        Entrar
+                    <button
+                        type="submit"
+                        className="login-button"
+                        disabled={loading}
+                    >
+                        {loading
+                            ? <span className="spinner-small"></span>
+                            : isRegistrando ? 'Cadastrar' : 'Entrar'
+                        }
                     </button>
 
                     <button
                         type="button"
-                        className="register-button"
-                        onClick={handleRegister}
+                        className="toggle-form-button"
+                        onClick={toggleFormMode}
+                        disabled={loading}
                     >
-                        Cadastrar
+                        {isRegistrando
+                            ? 'Já possui conta? Faça login'
+                            : 'Não tem conta? Cadastre-se'
+                        }
                     </button>
                 </form>
             </div>

@@ -1,52 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import { FaCloudUploadAlt, FaCopy, FaCheck } from 'react-icons/fa';
 import './App.css';
 import TermsOfUse from './components/TermsOfUse';
 import Privacy from './components/Privacy';
 import Login from './components/Login';
 import ProtectedRoute from './components/ProtectedRoute';
+import FileUpload from './components/FileUpload';
+import { logoutUsuario, getUsuarioAtual } from './lib/authService';
 
 function Home() {
-  const [file, setFile] = useState(null);
-  const [fileUrl, setFileUrl] = useState('');
+  const [userName, setUserName] = useState('');
   const [loading, setLoading] = useState(false);
-  const [copied, setCopied] = useState(false);
 
-  const handleFileChange = (event) => {
-    const selectedFile = event.target.files[0];
-    setFile(selectedFile);
-  };
+  useEffect(() => {
+    const carregarUsuario = async () => {
+      const { user } = await getUsuarioAtual();
+      if (user?.user_metadata?.nome) {
+        setUserName(user.user_metadata.nome);
+      }
+    };
 
-  const handleUpload = async () => {
-    if (!file) {
-      alert('Por favor, selecione um arquivo primeiro!');
-      return;
-    }
+    carregarUsuario();
+  }, []);
 
+  const handleLogout = async () => {
     setLoading(true);
-
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      // Simulando uma URL retornada pelo servidor
-      const fakeUrl = `https://filetech.com/share/${Math.random().toString(36).substring(7)}`;
-      setFileUrl(fakeUrl);
+      await logoutUsuario();
+      localStorage.removeItem('currentUser');
+      window.location.reload();
     } catch (error) {
-      alert('Erro ao fazer upload do arquivo!');
+      console.error('Erro ao fazer logout:', error);
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleCopyClick = async () => {
-    await navigator.clipboard.writeText(fileUrl);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem('currentUser');
-    window.location.reload();
   };
 
   return (
@@ -56,64 +43,20 @@ function Home() {
           <h1>File<span className="accent">Tech</span></h1>
           <p>Compartilhe seus arquivos de forma simples e rápida</p>
         </div>
-        <button onClick={handleLogout} className="logout-button">
-          Sair
-        </button>
+        <div className="user-controls">
+          {userName && <span className="user-name">Olá, {userName}</span>}
+          <button
+            onClick={handleLogout}
+            className="logout-button"
+            disabled={loading}
+          >
+            {loading ? <span className="spinner-small"></span> : 'Sair'}
+          </button>
+        </div>
       </header>
 
       <main className="App-main">
-        <div className="upload-container">
-          <h2>Upload de Arquivo</h2>
-          <div className="upload-area">
-            <input
-              type="file"
-              onChange={handleFileChange}
-              className="file-input"
-              id="file-input"
-            />
-            <label htmlFor="file-input" className="file-label">
-              <FaCloudUploadAlt className="upload-icon" />
-              <span>{file ? file.name : 'Arraste seu arquivo ou clique aqui'}</span>
-              <small>Tamanho máximo: 10MB</small>
-            </label>
-
-            <button
-              onClick={handleUpload}
-              disabled={!file || loading}
-              className="upload-button"
-            >
-              {loading ? (
-                <>
-                  <span className="spinner"></span>
-                  <span>Enviando...</span>
-                </>
-              ) : (
-                'Enviar arquivo'
-              )}
-            </button>
-          </div>
-
-          {fileUrl && (
-            <div className="url-container">
-              <h3>Link gerado com sucesso!</h3>
-              <div className="url-wrapper">
-                <input
-                  type="text"
-                  value={fileUrl}
-                  readOnly
-                  className="url-input"
-                />
-                <button
-                  onClick={handleCopyClick}
-                  className={`copy-button ${copied ? 'copied' : ''}`}
-                  title={copied ? 'Copiado!' : 'Copiar URL'}
-                >
-                  {copied ? <FaCheck /> : <FaCopy />}
-                </button>
-              </div>
-            </div>
-          )}
-        </div>
+        <FileUpload />
       </main>
 
       <footer className="App-footer">
